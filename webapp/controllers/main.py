@@ -1,11 +1,14 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-from flask import Blueprint,flash,redirect,url_for,render_template
+from flask import Blueprint,flash,redirect,url_for,render_template,current_app
 from flask import session
 from flask_login import login_user,logout_user
 
 from webapp.forms import LoginForm,RegisterForm
 from webapp.models import User, db
+
+from flask_principal import Identity,AnonymousIdentity,identity_changed
+
 
 main_blueprint = Blueprint(
 	'main',
@@ -23,19 +26,32 @@ def login():
 	form = LoginForm()
 
 	if form.validate_on_submit():
-		# flash("You have been logged in.",category='success')
+
 		# session['username'] = form.username.data
 		user = User.query.filter_by(username=form.username.data).one()
 		login_user(user,remember=form.remember.data)
+
+		identity_changed.send(
+			current_app._get_current_object(),
+			identity=Identity(user.id)
+		)
+
+		flash("You have been logged in.",category='success')
 		return redirect(url_for('blog.home'))
 
 	return render_template('login.html',form=form)
 
 @main_blueprint.route('/logout',methods=['GET','POST'])
 def logout():
-	# flash("You are logged out.",category='success')
 	# session.pop('username',None)
 	logout_user()
+
+	identity_changed.send(
+		current_app._get_current_object(),
+		identity = AnonymousIdentity()
+	)
+
+	flash("You are logged out.",category='success')
 	return redirect(url_for('.login'))
 
 
