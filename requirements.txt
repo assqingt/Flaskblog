@@ -9,6 +9,7 @@ celery==3.1.25
 cffi==1.8.3
 click==6.6
 colorama==0.3.7
+cssselect==1.0.0
 decorator==4.0.10
 Flask==0.11.1
 Flask-Bcrypt==0.7.1
@@ -25,6 +26,7 @@ ipython-genutils==0.1.0
 itsdangerous==0.24
 Jinja2==2.8
 kombu==3.0.37
+lxml==3.6.0
 Mako==1.0.4
 MarkupSafe==0.23
 pickleshare==0.7.4
@@ -35,6 +37,7 @@ python-dateutil==2.6.0
 python-editor==1.0.1
 pytz==2016.7
 redis==2.10.5
+requests==2.12.3
 simplegeneric==0.8.1
 six==1.10.0
 SQLAlchemy==1.1.2

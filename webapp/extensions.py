@@ -5,7 +5,7 @@ from flask_bcrypt import Bcrypt
 from flask_login import LoginManager
 from flask_principal import Principal,Permission,RoleNeed
 from flask_restful import Api
-
+from flask_celery import Celery
 
 bcrypt = Bcrypt()
 
@@ -29,3 +29,5 @@ default_permission = Permission(RoleNeed('default'))
 
 
 rest_api = Api()
+
+celery = Celery()

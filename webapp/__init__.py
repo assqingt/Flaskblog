@@ -6,7 +6,7 @@ from flask import Flask,redirect,url_for
 from webapp.config import DevConfig
 from webapp.models import db
 from webapp.controllers.blog import blog_blueprint
-from webapp.extensions import bcrypt,login_manager,principals,rest_api
+from webapp.extensions import bcrypt,login_manager,principals,rest_api,celery
 from webapp.controllers.main import main_blueprint
 from flask_principal import identity_loaded,UserNeed,RoleNeed
 from flask_login import current_user
@@ -23,6 +23,9 @@ def create_app(object_name):
 	bcrypt.init_app(app)
 	login_manager.init_app(app)
 	principals.init_app(app)
+	celery.init_app(app)
+
+
 
 	rest_api.add_resource(PostApi,
 	                      '/api/post',
@@ -46,11 +49,6 @@ def create_app(object_name):
 		if hasattr(current_user,'roles'):
 			for role in current_user.roles:
 				identity.provides.add(RoleNeed(role.name))
-
-
-
-
-
 
 
 	# @app.route('/')

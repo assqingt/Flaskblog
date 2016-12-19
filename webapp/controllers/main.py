@@ -18,7 +18,8 @@ main_blueprint = Blueprint(
 
 @main_blueprint.route('/')
 def index():
-	return redirect(url_for('blog.home'))
+	# return redirect(url_for('blog.home'))
+	return render_template("show.html")
 
 
 @main_blueprint.route('/login',methods=['GET','POST'])
